@@ -77,11 +77,11 @@ class TOSEC:
                           )''')
 
     def __enter__(self):
-        print 'enter'
+        print('enter')
         return self
 
     def __exit__(self, type, value, traceback):
-        print 'exit'
+        print('exit')
         self.db.close()
 
     def __del__(self):

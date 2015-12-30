@@ -1,7 +1,10 @@
 import os
 import json
 import socket
-import urllib2
+try:
+    import urllib.request as urllib2
+except ImportError:
+    import urllib2
 
 from lutris.util.log import logger
 

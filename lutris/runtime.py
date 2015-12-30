@@ -15,8 +15,10 @@ STATUS_UPDATER = None
 def is_updating(include_pending_updates=True):
     if include_pending_updates and CURRENT_UPDATES is None:
         return True
-    return CURRENT_UPDATES > 0
-
+    if CURRENT_UPDATES is None:
+        return False
+    else:
+        return CURRENT_UPDATES > 0
 
 def get_created_at(name):
     path = os.path.join(RUNTIME_DIR, name)

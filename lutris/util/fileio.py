@@ -1,8 +1,10 @@
 from collections import OrderedDict
-from ConfigParser import RawConfigParser
+try:
+    import configparser
+except ImportError:
+    import ConfigParser as configparser
 
-
-class EvilConfigParser(RawConfigParser):
+class EvilConfigParser(configparser.RawConfigParser):
     """ConfigParser with support for evil INIs using duplicate keys."""
     def write(self, fp):
         for section in self._sections:

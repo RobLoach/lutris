@@ -46,7 +46,10 @@ except ImportError:
                                 'question': "PythonYAML is not installed,\n"
                                             "do you want to install it now?"})
     if q.result == Gtk.ResponseType.YES:
-        os.system('software-center python-yaml')
+        if sys.version_info[0] < 3:
+            os.system('software-center python-yaml')
+        else:
+            os.system('software-center python3-yaml')
     else:
         sys.exit()
 
@@ -106,23 +109,23 @@ if options.list_games:
                 'slug': game['slug'],
                 'name': game['name'],
                 'runner': game['runner'],
-                'directory': game['directory'] or '-'
+                'directory': game['directory'] or ''
             })
-        print json.dumps(games, indent=2).encode('utf-8')
+        print(json.dumps(games, indent=2).encode('utf-8'))
     else:
         for game in game_list:
-            print u"{:4} | {:<40} | {:<40} | {:<15} | {:<64}".format(
+            print(u"{:4} | {:<40} | {:<40} | {:<15} | {:<64}".format(
                 game['id'],
                 game['name'][:40],
                 game['slug'][:40],
-                game['runner'],
+                game['runner'] or '-',
                 game['directory'] or '-'
-            ).encode('utf-8')
+            ).encode('utf-8'))
     exit()
 if options.list_steam:
     from lutris.runners import winesteam
     steam_runner = winesteam.winesteam()
-    print steam_runner.get_appid_list()
+    print(steam_runner.get_appid_list())
     exit()
 
 
@@ -199,7 +202,7 @@ if type(lutris) is dbus.Interface:
             pid = dbus_interface.GetConnectionUnixProcessID(lutris.bus_name)
 
             os.kill(pid, signal.SIGKILL)
-        except OSError, dbus.exceptions.DBusException:
+        except (OSError, dbus.exceptions.DBusException) as e:
             logger.debug(e)
             exit()  # Give up :(
         else:

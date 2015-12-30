@@ -1,7 +1,10 @@
 import os
 import json
 import urllib
-import urllib2
+try:
+    import urllib.request as urllib2
+except ImportError:
+    import urllib2
 import socket
 
 from lutris import settings
@@ -30,7 +33,7 @@ def connect(username, password):
     login_url = settings.SITE_URL + "api/accounts/token"
     try:
         request = urllib2.urlopen(login_url, credentials, 10)
-    except (socket.timeout, urllib2.URLError) as ex:
+    except (socket.timeout, urllib2.URLError, urllib.error) as ex:
         logger.error("Unable to connect to server (%s): %s", login_url, ex)
         return False
     response = json.loads(request.read())

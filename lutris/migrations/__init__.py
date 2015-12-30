@@ -20,8 +20,8 @@ MIGRATIONS.append([
 
 
 def get_migration_module(migration_name):
-    return __import__('lutris.migrations.%s' % migration_name,
-                      globals(), locals(), [migration_name], -1)
+    # The default level is -1.
+    return __import__('lutris.migrations.%s' % migration_name, globals(), locals(), [migration_name])
 
 
 def migrate():

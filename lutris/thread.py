@@ -2,6 +2,7 @@
 """Threading module, used to launch games while monitoring them."""
 
 import os
+import stat
 import sys
 import time
 import threading
@@ -89,6 +90,7 @@ class LutrisThread(threading.Thread):
         It's also the only reliable way to keep the term open when the
         game is quit.
         """
+        print("TEST")
         file_path = os.path.join(settings.CACHE_DIR, 'run_in_term.sh')
         with open(file_path, 'w') as f:
             f.write(dedent(
@@ -99,7 +101,8 @@ class LutrisThread(threading.Thread):
                 exec sh # Keep term open
                 """ % (self.cwd, self.env_string, self.command_string)
             ))
-            os.chmod(file_path, 0744)
+            # S_IXGRP: Group has execute permission.
+            os.chmod(file_path, stat.S_IXGRP)
 
         term_command = [self.terminal, '-e', file_path]
         self.game_process = subprocess.Popen(term_command, bufsize=1,

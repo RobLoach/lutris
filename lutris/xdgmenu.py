@@ -31,4 +31,4 @@ def get_xdg_games():
 
 if __name__ == '__main__':
 
-    print get_xdg_games()
+    print(get_xdg_games())

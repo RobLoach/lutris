@@ -43,7 +43,7 @@ def update_data_path(prefix, oldvalue=None):
         fin.close()
         os.rename(fout.name, fin.name)
     except (OSError, IOError):
-        print ("ERROR: Can't find lutris/lutrisconfig.py")
+        print("ERROR: Can't find lutris/lutrisconfig.py")
         sys.exit(1)
     return oldvalue
 

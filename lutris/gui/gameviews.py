@@ -113,7 +113,10 @@ class GameStore(GObject.Object):
     def fill_store(self, games):
         """Fill the model asynchronously and in steps."""
         loader = self._fill_store_generator(games)
-        GLib.idle_add(loader.next)
+        try:
+            GLib.idle_add(loader.next)
+        except AttributeError:
+            GLib.idle_add(next, loader)
 
     def _fill_store_generator(self, games, step=100):
         """Generator to fill the model in steps."""

@@ -20,11 +20,11 @@ GObject.threads_init()
 
 def timed(function):
     def _wrapped(*args, **kwargs):
-        print ">",
+        print(">")
         start_time = time.time()
         retval = function(*args, **kwargs)
         total = time.time() - start_time
-        print function.__name__, (TEST_FILE_SIZE / total) / 1048576
+        print(function.__name__, (TEST_FILE_SIZE / total) / 1048576)
         return retval
     return _wrapped
 
@@ -41,7 +41,7 @@ def test_download_asset():
 
 class DownloadDialogBenchmark(DownloadDialog):
     def download_complete(self, _widget, _data):
-        print "Complete"
+        print("Complete")
         self.destroy()
         Gtk.main_quit()
 

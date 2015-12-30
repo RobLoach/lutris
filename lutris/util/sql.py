@@ -28,8 +28,8 @@ def db_insert(db_path, table, fields):
                 field_values
             )
         except sqlite3.IntegrityError:
-            print columns
-            print field_values
+            print(columns)
+            print(field_values)
             raise
         inserted_id = cursor.lastrowid
     return inserted_id
@@ -82,13 +82,15 @@ def db_select(db_path, table, fields=None, condition=None):
 
 
 def _decode_utf8_values(values_list):
+    output = []
     """Return a tuple of values with UTF-8 string values being decoded."""
-    i = 0
     for v in values_list:
         if type(v) is str:
-            values_list[i] = v.decode('UTF-8')
-        i += 1
-    return tuple(values_list)
+            try:
+                output.append(v.decode('utf-8'))
+            except AttributeError:
+                output.append(v)
+    return tuple(output)
 
 
 def add_field(db_path, tablename, field):

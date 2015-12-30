@@ -4,7 +4,10 @@ import os
 import time
 import yaml
 import shutil
-import urllib2
+try:
+    import urllib.request as urllib2
+except ImportError:
+    import urllib2
 import platform
 
 from gi.repository import GLib

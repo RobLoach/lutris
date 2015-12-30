@@ -150,11 +150,11 @@ class RunnerInstallDialog(Dialog):
         extract_archive(src, dst)
         return src, row
 
-    def on_extracted(self, (src, row), error):
-        os.remove(src)
-        row[self.COL_PROGRESS] = 0
-        row[self.COL_INSTALLED] = True
-        self.installing.pop(row[self.COL_VER])
+    def on_extracted(self, file, error):
+        os.remove(file.src)
+        file.row[self.COL_PROGRESS] = 0
+        file.row[self.COL_INSTALLED] = True
+        self.installing.pop(file.row[self.COL_VER])
 
     def on_response(self, dialog, response):
         self.destroy()
