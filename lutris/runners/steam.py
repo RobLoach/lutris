@@ -8,7 +8,7 @@ from lutris.util.log import logger
 from lutris.util import system
 from lutris.util.steam import (get_app_state_log, get_path_from_appmanifest,
                                get_default_acf, read_config, to_vdf)
-
+from pysteam import model
 
 def shutdown():
     """Cleanly quit Steam."""
@@ -65,6 +65,15 @@ class steam(Runner):
             'help': ("Launches Steam with STEAM_RUNTIME=0. "
                      "Make sure you disabled Lutris Runtime and "
                      "have the required libraries installed.")
+        },
+        {
+            'option': 'steam_shortcuts',
+            'label': 'Add Steam Shortcuts for Lutris Games',
+            'type': 'bool',
+            'default': False,
+            'help': ("When enabled, will add Steam shortcuts "
+                     "to games managed in Lutris, allowing you "
+                     "to run Lutris games from Steam.")
         }
     ]
     system_options_override = [
@@ -214,6 +223,9 @@ class steam(Runner):
         return True
 
     def play(self):
+        if self.runner_config.get('steam_shortcuts'):
+            logger.error("Adding Shortcuts!")
+
         self.game_launch_time = time.localtime()
 
         # Get current steam pid to act as the root pid instead of lutris

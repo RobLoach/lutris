@@ -35,7 +35,8 @@ setup(
         'dbus-python',
         'pyxdg',
         'pyinotify',
-        'evdev'
+        'evdev',
+        'pysteam'
     ],
     url='https://lutris.net',
     description='Install and play any video game on Linux',
